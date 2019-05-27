@@ -6,12 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>jsonp请求demo</title>
   <link rel="stylesheet" href="style">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
   <div class="main">
     <p>您的账号余额是<span id="amount">{{amount}}</span>元</p>
     <div class="payBtn" id="imgPayBtn">img打钱1元</div>
     <div class="payBtn" id="scriptPayBtn">script打钱1元</div>
+    <div class="payBtn" id="jqPayBtn">JQ+JSONP 打钱1元</div>
   </div>
 <script>
   //用图片发请求
@@ -49,6 +51,21 @@
       e.currentTarget.remove()
       delete window[functionName]//函数执行完成后就删了！！！
     }
+  })
+  jqPayBtn.addEventListener('click',function(){
+    $.ajax({
+      url:'http://jack.com:8002/pay/script',
+      dataType:'jsonp',//!!!!指定dataType为jsonp
+      success:function(res){
+        if(res.success===true){
+          alert('打钱成功')
+          amount.innerText=amount.innerText-1
+        }
+      },
+      error:function(){
+        alert('打钱失败')
+      }
+    })
   })
 </script>
 </body>
