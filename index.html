@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jsonp请求demo</title>
+  <link rel="stylesheet" href="style">
+</head>
+<body>
+  <div class="main">
+    <p>您的账号余额是<span id="amount">{{amount}}</span>元</p>
+    <div class="payBtn" id="imgPayBtn">img打钱1元</div>
+    <div class="payBtn" id="scriptPayBtn">script打钱1元</div>
+  </div>
+<script>
+  //用图片发请求
+  imgPayBtn.addEventListener('click',function(){
+    let image=document.createElement('img')
+    image.src='/pay/image'
+    image.onload=function(){
+      alert('打钱成功')
+      // window.location.reload()
+      amount.innerText=amount.innerText-1
+    }
+    image.onerror=function(){
+      alert('打钱失败')
+    }
+  })
+  window.yyy=function(result){
+    alert('这是frank写的前端代码')
+    alert(`我得到的结果是${result}`)
+    amount.innerText=amount.innerText-1
+  }
+  //用script发请求
+  scriptPayBtn.addEventListener('click',function(){
+    let script=document.createElement('script')
+    script.src='http://jack.com:8002/pay/script?callbackName=yyy'
+    document.body.appendChild(script)
+    script.onload=function(e){
+      alert('打钱成功')
+      e.currentTarget.remove()
+    }
+    script.onerror=function(e){
+      alert('打钱失败')
+      e.currentTarget.remove()
+    }
+  })
+</script>
+</body>
+</html>
