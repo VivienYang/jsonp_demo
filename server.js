@@ -47,8 +47,11 @@ var server = http.createServer(function(request, response){
       response.statusCode = 200
       response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
       response.write(`
-        ${query.callbackName}.call(undefined,'success')
-      `)//这个是可以执行的js代码，执行callbackName传过来的函数
+        ${query.callback}.call(undefined,{
+          "success":true,
+          "amount":${new_amount}
+        })
+      `)//这个是可以执行的js代码，执行callback传过来的函数
     }
     else{
       response.statusCode = 400

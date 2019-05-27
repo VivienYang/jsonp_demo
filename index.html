@@ -27,23 +27,27 @@
       alert('打钱失败')
     }
   })
-  window.yyy=function(result){
-    alert('这是frank写的前端代码')
-    alert(`我得到的结果是${result}`)
-    amount.innerText=amount.innerText-1
-  }
   //用script发请求
   scriptPayBtn.addEventListener('click',function(){
     let script=document.createElement('script')
-    script.src='http://jack.com:8002/pay/script?callbackName=yyy'
+    //随机生成函数名称！！！！
+    let functionName=`vivienYang${parseInt(Math.random()*10000)}`
+    window[functionName]=function(result){
+      if(result.success===true){
+        amount.innerText=amount.innerText-1
+      }
+    }
+    script.src='http://jack.com:8002/pay/script?callback='+functionName
     document.body.appendChild(script)
     script.onload=function(e){
       alert('打钱成功')
       e.currentTarget.remove()
+      delete window[functionName]//函数执行完成后就删了！！！
     }
     script.onerror=function(e){
       alert('打钱失败')
       e.currentTarget.remove()
+      delete window[functionName]//函数执行完成后就删了！！！
     }
   })
 </script>
