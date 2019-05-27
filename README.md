@@ -22,14 +22,16 @@ JSONP
 2. yyy -> 随机数 frank1122334111()
 
 jQuery如何发送jsonp请求？
- $.ajax({
- url: "http://jack.com:8002/pay",
- dataType: "jsonp",
- success: function( response ) {
-     if(response === 'success'){
-     amount.innerText = amount.innerText - 1
-     }
- }
- })
+```
+$.ajax({
+  url: "http://jack.com:8002/pay",
+  dataType: "jsonp",
+  success: function( response ) {
+      if(response === 'success'){
+        amount.innerText = amount.innerText - 1
+      }
+  }
+})
+ ```
 
  $.jsonp()
